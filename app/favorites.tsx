@@ -1,31 +1,25 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native'
-import { getRepositories } from '../src/actions/get-repositories.action'
+import { View, StyleSheet, FlatList } from 'react-native'
 import { useEffect, useState } from 'react'
 import { Repository } from '../src/domain/entities/github-repository.entity'
 import GithubCard from '../src/presentation/components/GithubCard'
-import useDebounceValue from '../src/presentation/hooks/useDebounceValue'
 import SearchInput from '../src/presentation/components/ui/SearchInput'
 import useFavoritesStore from '../src/presentation/store/favorites.store'
-import { useNavigation, useRouter } from 'expo-router'
 
 const HomeScreen = () => {
-
   const [repositories, setRepositories] = useState<Repository[]>([])
-  const [searchQuery, setSearchQuery] = useState("javascript")
-
-  const debounceValue = useDebounceValue(searchQuery, 1000)
-
-  const router = useRouter()
+  const favoriteRepositories = useFavoritesStore(state => state.favorites)
+  const [searchQuery, setSearchQuery] = useState("")
 
   useEffect(() => {
-    if (debounceValue.length > 3){
-      getRepositories(debounceValue, 1, 10).then(data => setRepositories(data))
-    }
-  }, [debounceValue])
-
-  const handleRedirectToFavorites = () => {
-    router.push("favorites")
-  }
+      const filteredRepositories = favoriteRepositories.filter(favorite => {
+        const matchName = favorite.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchDescription = favorite.description?.toLowerCase().includes(searchQuery.toLowerCase())
+        const matchTags = favorite.tags?.some(tag => tag.includes(searchQuery.toLowerCase()))
+        const matchLang = favorite.language?.toLowerCase().includes(searchQuery.toLowerCase())
+        return matchName || matchDescription || matchTags || matchLang
+      });
+      setRepositories(filteredRepositories)
+  }, [searchQuery, favoriteRepositories])
 
   return (
     <View style={homeScreenStyles.container}>
@@ -34,7 +28,7 @@ const HomeScreen = () => {
         data={repositories.flat()}
         keyExtractor={repository => `${repository.id}`}
         numColumns={1}
-        renderItem={({item}) => <GithubCard repository={item} onPress={handleRedirectToFavorites}/>}
+        renderItem={({item}) => <GithubCard repository={item} />}
         style={{ width: "100%", gap:3 }}
         ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
       />

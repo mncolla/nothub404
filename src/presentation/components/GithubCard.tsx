@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { ReactNode, useMemo } from "react";
+import { View, Text, StyleSheet, Image, GestureResponderEvent, Pressable } from "react-native";
 import { Repository } from "../../domain/entities/github-repository.entity";
 import { getRelativeTime } from "../../config/helpers/getRelativeDay";
 import Avatar from "./ui/Avatar";
@@ -7,8 +7,10 @@ import Pill from "./ui/Pill";
 import StarsCount from "./ui/StarsCount";
 import TechnologyLang from "./ui/TechnologyLang";
 import { COLORS } from "../../config/theme/colors";
+import FavoriteButton from "./ui/FavoriteButton";
+import useFavoritesStore from "../store/favorites.store";
 
-const GithubCard = (repositoryProps: Repository) => {
+const GithubCard = ({repository, onPress}: {repository: Repository, onPress?: (event: GestureResponderEvent) => void }) => {
   const {
     id,
     name,
@@ -18,10 +20,27 @@ const GithubCard = (repositoryProps: Repository) => {
     language,
     stars,
     activity,
-  } = repositoryProps;
+  } = repository;
+
+  const addFavorite = useFavoritesStore(state => state.addFavorite)
+  const deleteFavorite = useFavoritesStore(state => state.deleteFavorite)
+  const favorites = useFavoritesStore(state => state.favorites)
+
+  const alreadyChecked = useMemo(()=>{
+    return favorites.some(favorite => favorite.id === id)
+  }, [favorites])
+
+  const handleToggleFavorite = () => {
+    if (alreadyChecked){
+      deleteFavorite(id)
+    }else{
+      addFavorite(repository)
+    }
+  }
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
+      <FavoriteButton checked={alreadyChecked} style={styles.favoriteButton} onPress={handleToggleFavorite} />
       <View style={styles.titleContainer}>
         <Avatar src={avatar}/>
         <Text style={styles.title}>{name}</Text>
@@ -35,7 +54,7 @@ const GithubCard = (repositoryProps: Repository) => {
         <StarsCount count={stars}/>
         <Text style={{ color: COLORS.muted }}>{getRelativeTime(activity)}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -46,7 +65,13 @@ const styles = StyleSheet.create({
     borderColor: COLORS.muted,
     borderRadius: 8,
     padding: 16,
-    gap: 10
+    gap: 10,
+    position: "relative"
+  },
+  favoriteButton:{
+    position: "absolute",
+    right: 10,
+    top: 10
   },
   titleContainer: {
     display: "flex",
