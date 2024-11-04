@@ -10,18 +10,17 @@ interface CancelButtonProps {
 
 const CancelButton = ({ style, onPress, label }: CancelButtonProps) => {
   return (
-    <View style={[styles.button, style]}>
-        <TouchableOpacity onPress={onPress}>
+    <View style={[styles.button, style]} testID="cancel-button-container">
+        <TouchableOpacity onPress={onPress} testID="cancel-button">
             <AntDesign name="close" size={14} color={COLORS.default} />
         </TouchableOpacity>
-        <Text style={{ color: COLORS.default }}>{label}</Text>
+        <Text style={{ color: COLORS.default }} testID="cancel-button-label">{label}</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
     button: {
-        
         backgroundColor: "#212830",
         padding: 7,
         display: "flex",
