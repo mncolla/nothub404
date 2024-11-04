@@ -7,9 +7,9 @@ const TechnologyLang = ({ language }: { language: string }) => {
   const languageColor = getGithubTechnologyColor(language)
 
   return (
-    <View style={styles.container}>
-      {languageColor && <View style={[styles.langColor, { backgroundColor: languageColor }]}></View>}
-      <Text style={styles.language}>{language}</Text>
+    <View style={styles.container} testID='lang-color-container'>
+      {languageColor && <View style={[styles.langColor, { backgroundColor: languageColor }]} testID='lang-color-dot'></View>}
+      <Text style={styles.language} testID='lang-color-label'>{language}</Text>
     </View>
   )
 }
