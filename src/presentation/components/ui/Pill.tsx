@@ -2,8 +2,8 @@ import { View, Text, StyleSheet } from 'react-native'
 import { COLORS } from '../../../config/theme/colors'
 const Pill = ({ label }: { label: string }) => {
     return (
-        <View style={styles.pill}>
-            <Text style={{color: COLORS.accent}}>{label}</Text>
+        <View style={styles.pill} testID='pill'>
+            <Text style={{color: COLORS.accent}} testID='pill-label'>{label}</Text>
         </View>
     )
 }
