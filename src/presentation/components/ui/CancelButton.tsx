@@ -4,19 +4,19 @@ import { COLORS } from '../../../config/theme/colors'
 
 interface CancelButtonProps {
     label: string,
-    style?: StyleProp<ViewStyle>, 
+    style?: StyleProp<ViewStyle>,
     onPress?: (event: GestureResponderEvent) => void,
 }
 
 const CancelButton = ({ style, onPress, label }: CancelButtonProps) => {
-  return (
-    <View style={[styles.button, style]} testID="cancel-button-container">
+    return (
         <TouchableOpacity onPress={onPress} testID="cancel-button">
-            <AntDesign name="close" size={14} color={COLORS.default} />
+            <View style={[styles.button, style]} testID="cancel-button-container">
+                <AntDesign name="close" size={14} color={COLORS.default} />
+                <Text style={{ color: COLORS.default }} testID="cancel-button-label">{label}</Text>
+            </View>
         </TouchableOpacity>
-        <Text style={{ color: COLORS.default }} testID="cancel-button-label">{label}</Text>
-    </View>
-  )
+    )
 }
 
 const styles = StyleSheet.create({
