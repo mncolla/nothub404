@@ -9,9 +9,12 @@ interface FavoriteButtonProps {
 }
 
 const FavoriteButton = ({ style, onPress, checked = false }: FavoriteButtonProps) => {
+
+  const iconName = checked ? "heart" : "hearto";
+
   return (
-    <TouchableOpacity style={[style, styles.button]} onPress={onPress}>
-      <AntDesign name={checked ? "heart" : "hearto"} size={14} color={checked ? "red" : COLORS.default} />
+    <TouchableOpacity style={[styles.button, style]} onPress={onPress} testID="favorite-button">
+      <AntDesign name={iconName} size={14} color={checked ? "red" : COLORS.default} testID="favorite-button-icon"/>
     </TouchableOpacity>
   )
 }
