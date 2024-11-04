@@ -22,7 +22,6 @@ export const getRepositories = async (query: string, page: number, limit: number
         const repositories = data.items.map(item => GithubRepositoryMapper.githubApiToEntity(item))
         return repositories
     } catch (error: any) {
-        console.error("error", error.message)
         throw new Error('Get repositories fail!')
     }
 }
