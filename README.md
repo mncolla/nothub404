@@ -12,7 +12,7 @@ Este proyecto está diseñado siguiendo prácticas de **Clean Architecture** y p
 
 ### Principales Capas
 - **Domain**: Define los modelos y casos de uso.
-- **Data**: Responsable de interactuar con la API de GitHub.
+- **Infraestructure**: Responsable de interactuar con la API de GitHub.
 - **Presentation**: Componentes y vistas de la interfaz de usuario.
 
 ### Requisitos
