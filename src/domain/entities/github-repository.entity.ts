@@ -7,4 +7,5 @@ export interface Repository {
     language?: string;
     stars: number;
     activity: Date; 
+    url: string
 }

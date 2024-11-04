@@ -13,6 +13,7 @@ export class GithubRepositoryMapper {
             language: data.language,
             stars: data.stargazers_count,
             activity: data.updated_at,
+            url: data.html_url
         }
     }
 }
