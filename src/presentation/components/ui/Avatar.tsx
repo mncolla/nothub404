@@ -1,7 +1,19 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
-const Avatar = ({ src }: { src: string }) => {
+import { FC } from 'react'
+import { Image, StyleSheet } from 'react-native'
+
+type AvatarProps = {
+    src: string
+}
+
+const Avatar: FC<AvatarProps> = ({ src }: AvatarProps) => {
     return (
-        <Image style={styles.avatar} src={src} />
+        <Image 
+            style={styles.avatar} 
+            src={src} 
+            source={{ uri: src }}
+            accessibilityRole="image"
+            testID="avatar-image"
+        />
     )
 }
 
