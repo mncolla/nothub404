@@ -19,7 +19,7 @@ Este proyecto está diseñado siguiendo prácticas de **Clean Architecture** y p
 - [Node.js](https://nodejs.org) y [Expo CLI](https://docs.expo.dev/get-started/installation/) instalados en tu máquina.
 
 ### Instrucciones
-1. Clona este repositorio: git clone https://github.com/tu-usuario/nothub404.gi.
+1. Clona este repositorio: git clone https://github.com/mncolla/nothub404.
 2. navega a la carpeta del proyecto con cd nothub404.
 3. Instala las dependencias del proyecto utilizando npm install.
 4. Inicia la aplicación en modo desarrollo con el comando npm start.
